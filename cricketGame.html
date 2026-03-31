@@ -34,21 +34,34 @@
         ShowResult('Stump', computerChoice);  
     ">Stump</button>
 
+    <button onclick="
+       localStorage.clear() 
+       resetScore();
+    ">Clear</button>
+
 
 
 
 <script>
+    let scoreStr = localStorage.getItem('score');
+    let score ;
+    resetScore(scoreStr);
 
-    let score = {
-        win : 0 ,
-        lost: 0 ,
-        tie : 0 ,
-        displayScore : function () {
-            return `\nwon : ${score.win} \nlost : ${score.lost} \ntie : ${score.tie}`;
+
+    function resetScore (scoreStr){
+        score = scoreStr ?  JSON.parse (scoreStr) :{
+            win : 0 ,
+            lost: 0 ,
+            tie : 0 ,
+            
+       };
+        score.displayScore = function   () {
+        return `\nwon : ${score.win} \nlost : ${score.lost} \ntie : ${score.tie}`;
                
-        }
+        };
 
-    };
+    }
+
 
 
 
@@ -78,7 +91,7 @@
                       return 'Computer wins';                   
                 }  else {
                       score.tie ++ ;
-                      return 'it\s a tie';
+                      return 'this one was a tie';
                       
                 }  
              
@@ -87,7 +100,7 @@
                     
                     if (computerChoice === 'Ball') {
                          score.tie ++ ;
-                        return 'it\s a tie';                      
+                        return 'this one was a tie';                      
                     }else if ( computerChoice === 'Stump' ){
                         score.win ++ ;
                         return'you won';                       
@@ -107,7 +120,7 @@
                        
                     }else if ( computerChoice === 'Stump' ){
                         score.tie ++ ;
-                        return'it\s a tie';
+                        return'this one was a tie';
                         
                     }else if ( computerChoice === 'Bat' ){
                          score.win ++;
@@ -124,8 +137,10 @@
               
                 
                 let resultMsg = getResult (userChoice , computerChoice);
-                alert(`You have chosen ${userChoice}. \nComputer choice is  ${computerChoice} \n${resultMsg} \n${score.displayScore()}`);
                 localStorage.setItem ('score', JSON.stringify(score));
+
+                alert(`You have chosen ${userChoice}. \nComputer choice is  ${computerChoice} \n${resultMsg} \n${score.displayScore()}`);
+                
             } 
             
             
